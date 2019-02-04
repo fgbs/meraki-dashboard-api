@@ -6,6 +6,7 @@ from __future__ import print_function
 from .base import Base
 from .clients import Clients
 from .devices import Devices
+from .ssids import Ssids
 from exceptions import NetworkIdMissing, IpMissing, ClientIdMissing, MacAddressMissing, DevicePolicyMissing, SerialMissing
 
 
@@ -17,6 +18,7 @@ class Networks(Base):
         # sub endpoint
         self.clients = Clients(api_key, self._name)
         self.devices = Devices(api_key, self._name)
+        self.ssids = Ssids(api_key, self._name)
 
     def list(self, id=None):
         '''
@@ -27,30 +29,6 @@ class Networks(Base):
 
         return self._get_request(self._name, id)
 
-    def update(self, id, name=None, time_zone='America/Los_Angeles', tags=[], disable_my_meraki_com=False, disable_remote_status_page=False):
-        '''
-        Update network
-
-        PARAMETERS
-            name:                       The name of the new network
-            timeZone:                   The timezone of the network.
-            tags:                       A space-separated list of tags to be applied to the network
-            disableMyMerakiCom:         Disables the local device status pages (my.meraki.com, ap.meraki.com, switch.meraki.com, wired.meraki.com). Optional (defaults to false)
-            disableRemoteStatusPage:    Disables access to the device status page (http://[device's LAN IP]). Optional. Can only be set if disableMyMerakiCom is set to false
-        '''
-        if id is None:
-            raise NetworkIdMissing
-
-        update = {
-            'name': name,
-            'timeZone': time_zone,
-            'tags': ' '.join(tags),
-            'disableMyMerakiCom': disable_my_meraki_com,
-            'disableRemoteStatusPage': disable_remote_status_page
-        }
-
-        return self._put_request(self._name, id, update=update)
-    
     def create(self, name=None, type=None, tags=[], time_zone='America/Los_Angeles', copy_from_network=None, disable_my_meraki_com=False, disable_remote_status_page=False):
         '''
         Create a network
@@ -81,7 +59,30 @@ class Networks(Base):
         
         return self._post_request(self._name, id, data=data)
 
+    def update(self, id, name=None, time_zone='America/Los_Angeles', tags=[], disable_my_meraki_com=False, disable_remote_status_page=False):
+        '''
+        Update network
 
+        PARAMETERS
+            name:                       The name of the new network
+            timeZone:                   The timezone of the network.
+            tags:                       A space-separated list of tags to be applied to the network
+            disableMyMerakiCom:         Disables the local device status pages (my.meraki.com, ap.meraki.com, switch.meraki.com, wired.meraki.com). Optional (defaults to false)
+            disableRemoteStatusPage:    Disables access to the device status page (http://[device's LAN IP]). Optional. Can only be set if disableMyMerakiCom is set to false
+        '''
+        if id is None:
+            raise NetworkIdMissing
+
+        update = {
+            'name': name,
+            'timeZone': time_zone,
+            'tags': ' '.join(tags),
+            'disableMyMerakiCom': disable_my_meraki_com,
+            'disableRemoteStatusPage': disable_remote_status_page
+        }
+
+        return self._put_request(self._name, id, update=update)
+    
     def delete(self, id=None):
         '''
         Delete a network
@@ -286,5 +287,14 @@ class Networks(Base):
 
             return self._get_request(self._name, network, 'bluetoothClients', parms=parms)
 
+    #
+    # splash
+    #
+    def splash_login_attempts(self, network=None, timespan=3600):
+        '''
+        List the splash login attempts for a network
+        '''
+        if timespan > 2592000:
+            timespan = 2592000 
 
-
+        return self._get_request(self._name, network, 'splashLoginAttempts', parms={'timespan': timespan})

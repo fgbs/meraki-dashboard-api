@@ -13,6 +13,17 @@ class Clients(Base):
         self._parent = parent
         self._name = 'clients'
 
+    def list(self, serial=None, timespan=3600):
+        '''
+        List the clients of a device, up to a maximum of a month ago. 
+        The usage of each client is returned in kilobytes. 
+        If the device is a switch, the switchport is returned; otherwise the switchport field is null.
+        '''
+        if timespan > 2592000:
+            timespan = 2592000 
+
+        return self._get_request(self._parent, serial, self._name, parms={'timespan': timespan})
+
     def get(self, network=None, client=None):
         '''
         Return the client associated with the given identifier. 
@@ -100,6 +111,21 @@ class Clients(Base):
             raise ClientIdMissing
 
         return self._get_request(self._parent, network, self._name, client, 'events', parms={'perPage': per_page})
+
+    def security_events(self, network=None, client=None, timespan=3600, per_page=30):
+        '''
+        Return the events associated with this client.
+        '''
+        if network is None:
+            raise NetworkIdMissing
+
+        if client is None:
+            raise ClientIdMissing
+
+        if timespan > 2592000:
+            timespan = 2592000 
+
+        return self._get_request(self._parent, network, self._name, client, 'securityEvents', parms={'timespan': timespan, 'perPage': per_page})
 
     def latency_history(self, network=None, client=None, t0=0, t1=0, timespan=3600):
         '''

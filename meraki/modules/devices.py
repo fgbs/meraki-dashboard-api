@@ -4,6 +4,7 @@
 from __future__ import print_function
 
 from .base import Base
+from .clients import Clients
 from exceptions import SerialMissing
 
 
@@ -13,16 +14,21 @@ class Devices(Base):
         self._parent = parent
         self._name = 'devices'
 
-    def list(self, network, serial=None, update={}):
+        # sub endpoint
+        self.clients = Clients(api_key, self._name)
+
+    def list(self, network, serial=None):
         '''
-        List the devices in a network or 
-        PARAMETERS
-            None
+        List the devices in a network
+
+        OR
 
         Return a single device or 
-        PARAMETERS
-            None
+        '''
+        return self._get_request(self._parent, network, self._name) if serial is None else self._get_request(self._parent, network, self._name, serial)
 
+    def update(self, network=None, serial=None, update={}):
+        '''
         Update the attributes of a device
         PARAMETERS
             name:           The name of a device
@@ -33,10 +39,8 @@ class Devices(Base):
             notes:          The notes for the device. String. Limited to 255 characters.
             moveMapMarker:  Whether or not to set the latitude and longitude of a device based on the new address. Only applies when lat and lng are not specified.
         '''
-        if not len(update):
-            return self._get_request(self._parent, network, self._name) if serial is None else self._get_request(self._parent, network, self._name, serial)
-        else:
-            self._put_request(self._parent, network, self._name, serial, update=update)
+        self._put_request(self._parent, network, self._name, serial, update=update)
+
 
     def performance(self, network=None, serial=None):
         '''
