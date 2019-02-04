@@ -290,11 +290,20 @@ class Networks(Base):
     #
     # splash
     #
-    def splash_login_attempts(self, network=None, timespan=3600):
+    def splash_login_attempts(self, network=None, ssid=None, timespan=3600):
         '''
         List the splash login attempts for a network
         '''
         if timespan > 2592000:
             timespan = 2592000 
 
-        return self._get_request(self._name, network, 'splashLoginAttempts', parms={'timespan': timespan})
+        parms = {
+            'timespan': timespan
+        }
+
+        if ssid is not None:
+            parms.update({
+                'ssidNumber': str(ssid)
+            })
+
+        return self._get_request(self._name, network, 'splashLoginAttempts', parms=parms)
