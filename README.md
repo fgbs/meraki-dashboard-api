@@ -8,7 +8,7 @@ You need to enable APIs in your Meraki dashboard and obtain an APIKey:  [Instruc
 ## Example
 
 ```python
-from meraki_dashboard_api import Dashboard
+from meraki import Dashboard
 
 apikey = "jkhsfsdhk32424******example*****jlasdfsdfl3245345"
 
