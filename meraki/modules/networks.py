@@ -7,7 +7,7 @@ from .base import Base
 from .clients import Clients
 from .devices import Devices
 from .ssids import Ssids
-from exceptions import NetworkIdMissing, IpMissing, ClientIdMissing, MacAddressMissing, DevicePolicyMissing, SerialMissing
+from meraki.exceptions import NetworkIdMissing, IpMissing, ClientIdMissing, MacAddressMissing, DevicePolicyMissing, SerialMissing
 
 
 class Networks(Base):

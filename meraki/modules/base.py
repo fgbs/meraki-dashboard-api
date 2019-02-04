@@ -13,7 +13,7 @@ from requests_toolbelt import SSLAdapter
 import urllib3
 urllib3.disable_warnings()
 
-from exceptions import ApiKeyMissing, APIError
+from meraki.exceptions import ApiKeyMissing, APIError
 
 
 class Base(object):
@@ -41,8 +41,8 @@ class Base(object):
             extra = '/'.join(args[1:])
             url = '{}/{}'.format(url, extra)
 
-        print('DEBUG URL:', args, kwargs)
-        print('DEBUG URL:', url)
+        # print('DEBUG URL:', args, kwargs)
+        # print('DEBUG URL:', url)
 
         return url
 
@@ -56,8 +56,8 @@ class Base(object):
 
         query = '&'.join(args)
 
-        print('DEBUG Q:', kwargs['parms'])
-        print('DEBUG Q:', query)
+        # print('DEBUG Q:', kwargs['parms'])
+        # print('DEBUG Q:', query)
 
         return '{}?{}'.format(url, query)
 

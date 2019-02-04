@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 from .base import Base
-from exceptions import NetworkIdMissing, ClientIdMissing, MacAddressMissing, DevicePolicyMissing
+from meraki.exceptions import NetworkIdMissing, ClientIdMissing, MacAddressMissing, DevicePolicyMissing
 
 
 class Clients(Base):

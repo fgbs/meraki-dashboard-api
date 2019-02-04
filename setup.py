@@ -17,7 +17,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'requests',
-        'requests-toolbelt'
+        'requests-toolbelt',
+        'urllib3'
     ],
     classifiers=[
         'Intended Audience :: Developers',

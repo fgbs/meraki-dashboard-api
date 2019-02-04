@@ -1,6 +1,6 @@
 # Meraki Dashboard API
 
-Access  to your Cisco Meraki cloud-managed in a pythonic way.  Also available via PIP
+Access  to your Cisco Meraki cloud-managed in a pythonic way.  Also available via [PIP](https://pypi.org/project/meraki-dashboard-api/)
 
 ## Prerequisites
 You need to enable APIs in your Meraki dashboard and obtain an APIKey:  [Instructions](https://documentation.meraki.com/zGeneral_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API) 

@@ -5,7 +5,7 @@ from __future__ import print_function
 
 from .base import Base
 from .clients import Clients
-from exceptions import SerialMissing
+from meraki.exceptions import SerialMissing
 
 
 class Devices(Base):
